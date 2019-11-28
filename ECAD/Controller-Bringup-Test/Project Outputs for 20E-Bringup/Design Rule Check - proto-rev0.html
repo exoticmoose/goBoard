@@ -1,0 +1,659 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD19\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">11/27/2019</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">6:43:30 PM</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:01</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc" class="file"><acronym title="G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc">G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">90</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Waived Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">8</td></tr>
+</table>
+</td>
+</table><a name="IDBUSWKU0T1ELUNWRS3BMBYYFYWGKMIYRGXFHTJBEVGP1W1YSDBIFC"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDMIPGU15KRPZIBWWUJK3FTZV0MMMUKZGCA2KSSXOGC1LH3T3UQR2O">Clearance Constraint (Gap=0.127mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDAZZHJW3ZRO50KS3B1YGU5TZYUIMTHYSVCK4RBFNK3ZNDKBJECM1O">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID5HSHDFRCYT4LBBZMTZEOUTO3WEZNWISMWR5JZ4MMV0OL4FCUXFYJ">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDKW0UXOBSXKIJKPAMHCP0DRSZOHNYY2SQUFVZJGCSNYRI2YTHQCNF">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDEP3LPQQYEJNZLWJV5TGTW1R5RJZ53TMEW0FN4NDV1YEMEHDCLH2P">Width Constraint (Min=0.127mm) (Max=2.54mm) (Preferred=0.254mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDQL0NEJLXXYISDTZT1NDBHG2FBF52BQL1RKB2BPJU2OYORZW1K43F">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDIAVWFS23XD2VLWQ4ELHCTBIURL0OMNSPJZTXTSOSJXFH55KV55P">Hole Size Constraint (Min=0.3mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDGWCITWOOMR4OJDYK1C0GJIN0DGKPQOE3UTDIF3KWYDGBYNLOZCF">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDZ2EG0NX4E5OZOBS0VI4DJ3RS1LIFDWZNSFRISD5LQU1EORC5DYC">Minimum Solder Mask Sliver (Gap=0mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJYQXHPURUJGGHFY3PF5QQBSCADQQOYB1UQSDMLKBOEUBTHVBIMVM">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</a></td>
+<td class="column2">52</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDINZ2YINCYVG1GWXXGR2KILCOILV0ZDGUGDPPAWGVEMAC0FCUW40">Silk to Silk (Clearance=0.254mm) (All),(All)</a></td>
+<td class="column2">38</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDLDRSO2R0JZ0IHLZJJIJHVEKZ4PNXZPMSZKAQTRHTCP1NPZMJKP4B">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDNPCGZ0HMDCE2PCIYQRL04H1XWCVEWFO3PZPNSHCAW2E2O5G30XSB">Board Clearance Constraint (Gap=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID0Y4JBZ4SM2WPKZYACKMKIAVKILQ0ZLYKYOZGTLHJJOLEIE25H0UN">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">90</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Waived Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID2F0J4C3S4LQDMAH4EXGME5ZHMP5XXRW2XOTHKFIRNZRBSEGMGBYB">Hole Size Constraint (Min=0.3mm) (Max=2.54mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDJUBACKPFTYIKLDJY4VWPFT520JA1B15SSHRSCUD1FVB0HVSQNJCF">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">4</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">8</td>
+</tr>
+</table><br><a name="IDN0GJX3XJVQ3LMZIR12GBSRD1KEI2TXGMA415XSBYBMWIIFM4I3GP"><h2>Rule Violations</h2></a><a name="IDJYQXHPURUJGGHFY3PF5QQBSCADQQOYB1UQSDMLKBOEUBTHVBIMVM"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk To Solder Mask (Clearance=0.254mm) (IsPad),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2222.151mil|Location2.X=2233.401mil|Location1.Y=2954.783mil|Location2.Y=2966.033mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2222.151mil|Location2.X=2233.401mil|Location1.Y=2954.783mil|Location2.Y=2966.033mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.111mm &lt; 0.254mm) Between Pad C28-1(15.8mm,40.9mm) on Top Layer And Text "C28" (13.825mm,39.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.111mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2158.171mil|Location2.X=2169.421mil|Location1.Y=2954.783mil|Location2.Y=2966.033mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2158.171mil|Location2.X=2169.421mil|Location1.Y=2954.783mil|Location2.Y=2966.033mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.111mm &lt; 0.254mm) Between Pad C28-2(13.9mm,40.9mm) on Top Layer And Text "C28" (13.825mm,39.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.111mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2139.946mil|Location2.X=2151.196mil|Location1.Y=3008.155mil|Location2.Y=3019.405mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2139.946mil|Location2.X=2151.196mil|Location1.Y=3008.155mil|Location2.Y=3019.405mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.105mm &lt; 0.254mm) Between Pad C28-2(13.9mm,40.9mm) on Top Layer And Track (13.345mm,37.705mm)(13.345mm,45.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.105mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2230.845mil|Location2.X=2242.095mil|Location1.Y=2692.972mil|Location2.Y=2704.222mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2230.845mil|Location2.X=2242.095mil|Location1.Y=2692.972mil|Location2.Y=2704.222mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.211mm &lt; 0.254mm) Between Pad C29-1(15.775mm,34.3mm) on Top Layer And Text "C29" (13.775mm,32.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.211mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2156.203mil|Location2.X=2167.453mil|Location1.Y=2692.972mil|Location2.Y=2704.222mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2156.203mil|Location2.X=2167.453mil|Location1.Y=2692.972mil|Location2.Y=2704.222mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.211mm &lt; 0.254mm) Between Pad C29-2(13.875mm,34.3mm) on Top Layer And Text "C29" (13.775mm,32.55mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.211mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2139.454mil|Location2.X=2150.704mil|Location1.Y=2748.312mil|Location2.Y=2759.562mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2139.454mil|Location2.X=2150.704mil|Location1.Y=2748.312mil|Location2.Y=2759.562mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.08mm &lt; 0.254mm) Between Pad C29-2(13.875mm,34.3mm) on Top Layer And Track (13.345mm,29.855mm)(13.345mm,37.475mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.08mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3426.285mil|Location2.X=3433.951mil|Location1.Y=4429.234mil|Location2.Y=4436.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3426.285mil|Location2.X=3433.951mil|Location1.Y=4429.234mil|Location2.Y=4436.9mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C31-1(45.375mm,78.7mm) on Top Layer And Track (46.125mm,75.01mm)(46.125mm,82.39mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3016.836mil|Location2.X=3024.503mil|Location1.Y=4429.234mil|Location2.Y=4436.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3016.836mil|Location2.X=3024.503mil|Location1.Y=4429.234mil|Location2.Y=4436.9mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad C31-2(36.475mm,78.7mm) on Top Layer And Track (35.725mm,73.5mm)(35.725mm,83.9mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3163.82mil|Location2.X=3175.07mil|Location1.Y=3914.16mil|Location2.Y=3925.41mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3163.82mil|Location2.X=3175.07mil|Location1.Y=3914.16mil|Location2.Y=3925.41mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.229mm &lt; 0.254mm) Between Pad C6-1(39.875mm,63.8mm) on Top Layer And Text "C5" (38.25mm,64.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.229mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3118.3mil|Location2.X=3129.55mil|Location1.Y=3914.164mil|Location2.Y=3925.414mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3118.3mil|Location2.X=3129.55mil|Location1.Y=3914.164mil|Location2.Y=3925.414mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.23mm &lt; 0.254mm) Between Pad C6-2(37.975mm,63.8mm) on Top Layer And Text "C5" (38.25mm,64.75mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.23mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3105.021mil|Location2.X=3116.271mil|Location1.Y=3038.937mil|Location2.Y=3050.187mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3105.021mil|Location2.X=3116.271mil|Location1.Y=3038.937mil|Location2.Y=3050.187mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.236mm &lt; 0.254mm) Between Pad C9-1(37.975mm,43.1mm) on Top Layer And Text "C10" (37.875mm,41.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3164.65mil|Location2.X=3175.9mil|Location1.Y=3038.937mil|Location2.Y=3050.187mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3164.65mil|Location2.X=3175.9mil|Location1.Y=3038.937mil|Location2.Y=3050.187mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.236mm &lt; 0.254mm) Between Pad C9-2(39.875mm,43.1mm) on Top Layer And Text "C10" (37.875mm,41.325mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2794.588mil|Location2.Y=2806.167mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2794.588mil|Location2.Y=2806.167mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q10-1(58.9mm,35.665mm) on Top Layer And Track (59.6mm,36.265mm)(60.6mm,36.265mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2687.14mil|Location2.Y=2698.783mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2687.14mil|Location2.Y=2698.783mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q10-2(58.9mm,33.865mm) on Top Layer And Track (59.6mm,33.265mm)(60.6mm,33.265mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4300.689mil|Location2.Y=4312.269mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4300.689mil|Location2.Y=4312.269mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q1-1(58.175mm,73.92mm) on Top Layer And Track (58.875mm,74.52mm)(59.875mm,74.52mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2626.674mil|Location2.Y=2638.254mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2626.674mil|Location2.Y=2638.254mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q11-1(58.9mm,31.4mm) on Top Layer And Track (59.6mm,32mm)(60.6mm,32mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2519.227mil|Location2.Y=2530.869mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2519.227mil|Location2.Y=2530.869mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q11-2(58.9mm,29.6mm) on Top Layer And Track (59.6mm,29mm)(60.6mm,29mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4193.242mil|Location2.Y=4204.885mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4193.242mil|Location2.Y=4204.885mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q1-2(58.175mm,72.12mm) on Top Layer And Track (58.875mm,71.52mm)(59.875mm,71.52mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2458.76mil|Location2.Y=2470.34mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2458.76mil|Location2.Y=2470.34mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q12-1(58.9mm,27.135mm) on Top Layer And Track (59.6mm,27.735mm)(60.6mm,27.735mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2351.313mil|Location2.Y=2362.956mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2351.313mil|Location2.Y=2362.956mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q12-2(58.9mm,25.335mm) on Top Layer And Track (59.6mm,24.735mm)(60.6mm,24.735mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4145.375mil|Location2.Y=4156.954mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4145.375mil|Location2.Y=4156.954mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q2-1(58.175mm,69.975mm) on Top Layer And Track (58.875mm,70.575mm)(59.875mm,70.575mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4037.927mil|Location2.Y=4049.57mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4037.927mil|Location2.Y=4049.57mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q2-2(58.175mm,68.175mm) on Top Layer And Track (58.875mm,67.575mm)(59.875mm,67.575mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3990.06mil|Location2.Y=4001.639mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3990.06mil|Location2.Y=4001.639mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q3-1(58.175mm,66.03mm) on Top Layer And Track (58.875mm,66.63mm)(59.875mm,66.63mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3882.613mil|Location2.Y=3894.255mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3882.613mil|Location2.Y=3894.255mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q3-2(58.175mm,64.23mm) on Top Layer And Track (58.875mm,63.63mm)(59.875mm,63.63mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3834.351mil|Location2.Y=3845.931mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3834.351mil|Location2.Y=3845.931mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q4-1(58.175mm,62.075mm) on Top Layer And Track (58.875mm,62.675mm)(59.875mm,62.675mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3726.904mil|Location2.Y=3738.546mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=3726.904mil|Location2.Y=3738.546mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q4-2(58.175mm,60.275mm) on Top Layer And Track (58.875mm,59.675mm)(59.875mm,59.675mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4623.327mil|Location2.Y=4634.907mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4623.327mil|Location2.Y=4634.907mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q5-1(58.175mm,82.115mm) on Top Layer And Track (58.875mm,82.715mm)(59.875mm,82.715mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4515.88mil|Location2.Y=4527.523mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4515.88mil|Location2.Y=4527.523mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q5-2(58.175mm,80.315mm) on Top Layer And Track (58.875mm,79.715mm)(59.875mm,79.715mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4463.091mil|Location2.Y=4474.671mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4463.091mil|Location2.Y=4474.671mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q6-1(58.175mm,78.045mm) on Top Layer And Track (58.875mm,78.645mm)(59.875mm,78.645mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4355.644mil|Location2.Y=4367.287mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3920.003mil|Location2.X=3931.253mil|Location1.Y=4355.644mil|Location2.Y=4367.287mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q6-2(58.175mm,76.245mm) on Top Layer And Track (58.875mm,75.645mm)(59.875mm,75.645mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2290.847mil|Location2.Y=2302.427mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2290.847mil|Location2.Y=2302.427mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q7-1(58.9mm,22.87mm) on Top Layer And Track (59.6mm,23.47mm)(60.6mm,23.47mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2183.4mil|Location2.Y=2195.042mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2183.4mil|Location2.Y=2195.042mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q7-2(58.9mm,21.07mm) on Top Layer And Track (59.6mm,20.47mm)(60.6mm,20.47mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2122.934mil|Location2.Y=2134.513mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2122.934mil|Location2.Y=2134.513mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q8-1(58.9mm,18.605mm) on Top Layer And Track (59.6mm,19.205mm)(60.6mm,19.205mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2015.487mil|Location2.Y=2027.129mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2015.487mil|Location2.Y=2027.129mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q8-2(58.9mm,16.805mm) on Top Layer And Track (59.6mm,16.205mm)(60.6mm,16.205mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2962.501mil|Location2.Y=2974.08mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2962.501mil|Location2.Y=2974.08mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q9-1(58.9mm,39.93mm) on Top Layer And Track (59.6mm,40.53mm)(60.6mm,40.53mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2855.053mil|Location2.Y=2866.696mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3948.547mil|Location2.X=3959.797mil|Location1.Y=2855.053mil|Location2.Y=2866.696mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.22mm &lt; 0.254mm) Between Pad Q9-2(58.9mm,38.13mm) on Top Layer And Track (59.6mm,37.53mm)(60.6mm,37.53mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.22mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3300.477mil|Location2.X=3311.727mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3300.477mil|Location2.X=3311.727mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R10-1(42.325mm,63.8mm) on Top Layer And Track (41.75mm,64.5mm)(49.25mm,64.5mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3501.265mil|Location2.X=3512.515mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3501.265mil|Location2.X=3512.515mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R2-1(48.725mm,63.8mm) on Top Layer And Track (41.75mm,64.5mm)(49.25mm,64.5mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3547.525mil|Location2.X=3558.775mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3547.525mil|Location2.X=3558.775mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R2-1(48.725mm,63.8mm) on Top Layer And Track (49.25mm,64.5mm)(49.25mm,66mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.328mil|Location2.X=3568.578mil|Location1.Y=3870.359mil|Location2.Y=3881.609mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.328mil|Location2.X=3568.578mil|Location1.Y=3870.359mil|Location2.Y=3881.609mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad R2-1(48.725mm,63.8mm) on Top Layer And Track (49.75mm,60.75mm)(49.75mm,66mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.328mil|Location2.X=3568.578mil|Location1.Y=3795.556mil|Location2.Y=3806.806mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3557.328mil|Location2.X=3568.578mil|Location1.Y=3795.556mil|Location2.Y=3806.806mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.248mm &lt; 0.254mm) Between Pad R2-2(48.725mm,61.9mm) on Top Layer And Track (49.75mm,60.75mm)(49.75mm,66mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3438.273mil|Location2.X=3449.523mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3438.273mil|Location2.X=3449.523mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R4-1(47.125mm,63.8mm) on Top Layer And Track (41.75mm,64.5mm)(49.25mm,64.5mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.281mil|Location2.X=3386.531mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3375.281mil|Location2.X=3386.531mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R6-1(45.525mm,63.8mm) on Top Layer And Track (41.75mm,64.5mm)(49.25mm,64.5mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2184.47mil|Location2.X=2192.137mil|Location1.Y=2273.104mil|Location2.Y=2280.771mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2184.47mil|Location2.X=2192.137mil|Location1.Y=2273.104mil|Location2.Y=2280.771mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R66-2(14.6mm,22.825mm) on Top Layer And Text "U5" (14.583mm,22.61mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2227.123mil|Location2.X=2234.789mil|Location1.Y=2285.599mil|Location2.Y=2293.266mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2227.123mil|Location2.X=2234.789mil|Location1.Y=2285.599mil|Location2.Y=2293.266mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (Collision &lt; 0.254mm) Between Pad R68-2(16.2mm,22.825mm) on Top Layer And Text "U5" (14.583mm,22.61mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3312.289mil|Location2.X=3323.539mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3312.289mil|Location2.X=3323.539mil|Location1.Y=3902.308mil|Location2.Y=3913.558mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.223mm &lt; 0.254mm) Between Pad R8-1(43.925mm,63.8mm) on Top Layer And Track (41.75mm,64.5mm)(49.25mm,64.5mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.223mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2889.942mil|Location2.X=2901.192mil|Location1.Y=5208.27mil|Location2.Y=5221.44mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2889.942mil|Location2.X=2901.192mil|Location1.Y=5208.27mil|Location2.Y=5221.44mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.224mm &lt; 0.254mm) Between Pad R83-1(33.3mm,97.177mm) on Top Layer And Text "C54" (32.375mm,95.375mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2890.068mil|Location2.X=2901.318mil|Location1.Y=5137.153mil|Location2.Y=5148.403mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2890.068mil|Location2.X=2901.318mil|Location1.Y=5137.153mil|Location2.Y=5148.403mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.199mm &lt; 0.254mm) Between Pad R83-2(33.3mm,95.277mm) on Top Layer And Text "C54" (32.375mm,95.375mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.199mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2958.311mil|Location2.X=2969.561mil|Location1.Y=4942.703mil|Location2.Y=4953.953mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2958.311mil|Location2.X=2969.561mil|Location1.Y=4942.703mil|Location2.Y=4953.953mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.232mm &lt; 0.254mm) Between Pad R86-1(34.75mm,90.202mm) on Top Layer And Text "R86" (31.925mm,89.875mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.232mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1832.958mil|Location2.X=1844.208mil|Location1.Y=4453.294mil|Location2.Y=4464.544mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1832.958mil|Location2.X=1844.208mil|Location1.Y=4453.294mil|Location2.Y=4464.544mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.236mm &lt; 0.254mm) Between Pad R95-1(5.778mm,79.024mm) on Top Layer And Text "R95" (5.7mm,77.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1897.058mil|Location2.X=1908.308mil|Location1.Y=4453.294mil|Location2.Y=4464.544mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1897.058mil|Location2.X=1908.308mil|Location1.Y=4453.294mil|Location2.Y=4464.544mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.236mm &lt; 0.254mm) Between Pad R95-2(7.678mm,79.024mm) on Top Layer And Text "R95" (5.7mm,77.25mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.236mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2320.658mil|Location2.X=2331.908mil|Location1.Y=3108.647mil|Location2.Y=3119.897mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2320.658mil|Location2.X=2331.908mil|Location1.Y=3108.647mil|Location2.Y=3119.897mil|Absolute=True">Silk To Solder Mask Clearance Constraint: (0.252mm &lt; 0.254mm) Between Pad TP7-1(18.675mm,44.25mm) on Top Layer And Text "TP7" (15.775mm,43.15mm) on Top Overlay [Top Overlay] to [Top Solder] clearance [0.252mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDINZ2YINCYVG1GWXXGR2KILCOILV0ZDGUGDPPAWGVEMAC0FCUW40"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Silk to Silk (Clearance=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2402.296mil|Location2.X=2413.546mil|Location1.Y=3401.327mil|Location2.Y=3412.577mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2402.296mil|Location2.X=2413.546mil|Location1.Y=3401.327mil|Location2.Y=3412.577mil|Absolute=True">Silk To Silk Clearance Constraint: (0.052mm &lt; 0.254mm) Between Text "7" (20.289mm,50.267mm) on Top Overlay And Track (20.035mm,49.505mm)(20.035mm,54.585mm) on Top Overlay Silk Text to Silk Clearance [0.052mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3115.685mil|Location2.X=3126.935mil|Location1.Y=2992.161mil|Location2.Y=3003.411mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3115.685mil|Location2.X=3126.935mil|Location1.Y=2992.161mil|Location2.Y=3003.411mil|Absolute=True">Silk To Silk Clearance Constraint: (0.21mm &lt; 0.254mm) Between Text "C10" (37.875mm,41.325mm) on Top Overlay And Text "C9" (37.875mm,40.15mm) on Top Overlay Silk Text to Silk Clearance [0.21mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.443mil|Location2.X=2735.693mil|Location1.Y=3257.581mil|Location2.Y=3268.831mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2724.443mil|Location2.X=2735.693mil|Location1.Y=3257.581mil|Location2.Y=3268.831mil|Absolute=True">Silk To Silk Clearance Constraint: (0.035mm &lt; 0.254mm) Between Text "C11" (29.25mm,47.75mm) on Top Overlay And Text "C12" (28.25mm,47.5mm) on Top Overlay Silk Text to Silk Clearance [0.035mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3849.954mil|Location2.Y=3861.204mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3849.954mil|Location2.Y=3861.204mil|Absolute=True">Silk To Silk Clearance Constraint: (0.184mm &lt; 0.254mm) Between Text "C20" (22.118mm,61.951mm) on Top Overlay And Text "R55" (22.118mm,63.1mm) on Top Overlay Silk Text to Silk Clearance [0.184mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2484.659mil|Location2.X=2495.909mil|Location1.Y=3804.713mil|Location2.Y=3815.963mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2484.659mil|Location2.X=2495.909mil|Location1.Y=3804.713mil|Location2.Y=3815.963mil|Absolute=True">Silk To Silk Clearance Constraint: (0.184mm &lt; 0.254mm) Between Text "C20" (22.118mm,61.951mm) on Top Overlay And Text "R57" (22.118mm,60.802mm) on Top Overlay Silk Text to Silk Clearance [0.184mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3759.472mil|Location2.Y=3770.722mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3759.472mil|Location2.Y=3770.722mil|Absolute=True">Silk To Silk Clearance Constraint: (0.184mm &lt; 0.254mm) Between Text "C22" (22.118mm,59.653mm) on Top Overlay And Text "R57" (22.118mm,60.802mm) on Top Overlay Silk Text to Silk Clearance [0.184mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2484.659mil|Location2.X=2495.909mil|Location1.Y=3714.231mil|Location2.Y=3725.481mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2484.659mil|Location2.X=2495.909mil|Location1.Y=3714.231mil|Location2.Y=3725.481mil|Absolute=True">Silk To Silk Clearance Constraint: (0.184mm &lt; 0.254mm) Between Text "C22" (22.118mm,59.653mm) on Top Overlay And Text "R59" (22.118mm,58.504mm) on Top Overlay Silk Text to Silk Clearance [0.184mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.252mil|Location2.X=1786.502mil|Location1.Y=3416.943mil|Location2.Y=3428.193mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.252mil|Location2.X=1786.502mil|Location1.Y=3416.943mil|Location2.Y=3428.193mil|Absolute=True">Silk To Silk Clearance Constraint: (0.234mm &lt; 0.254mm) Between Text "C23" (1.874mm,51.799mm) on Top Overlay And Track (4.45mm,44.95mm)(4.5mm,57.25mm) on Top Overlay Silk Text to Silk Clearance [0.234mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3668.99mil|Location2.Y=3680.24mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2527.312mil|Location2.X=2538.562mil|Location1.Y=3668.99mil|Location2.Y=3680.24mil|Absolute=True">Silk To Silk Clearance Constraint: (0.184mm &lt; 0.254mm) Between Text "C24" (22.118mm,57.354mm) on Top Overlay And Text "R59" (22.118mm,58.504mm) on Top Overlay Silk Text to Silk Clearance [0.184mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.524mil|Location2.X=1786.774mil|Location1.Y=3550.942mil|Location2.Y=3562.192mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.524mil|Location2.X=1786.774mil|Location1.Y=3550.942mil|Location2.Y=3562.192mil|Absolute=True">Silk To Silk Clearance Constraint: (0.248mm &lt; 0.254mm) Between Text "C25" (1.874mm,55.202mm) on Top Overlay And Track (4.45mm,44.95mm)(4.5mm,57.25mm) on Top Overlay Silk Text to Silk Clearance [0.248mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2142.875mil|Location2.X=2154.125mil|Location1.Y=2680.482mil|Location2.Y=2691.732mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2142.875mil|Location2.X=2154.125mil|Location1.Y=2680.482mil|Location2.Y=2691.732mil|Absolute=True">Silk To Silk Clearance Constraint: (0.254mm &lt; 0.254mm) Between Text "C29" (13.775mm,32.55mm) on Top Overlay And Track (13.345mm,29.855mm)(13.345mm,37.475mm) on Top Overlay Silk Text to Silk Clearance [0.254mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3923.919mil|Location2.X=3935.169mil|Location1.Y=5019.981mil|Location2.Y=5031.231mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3923.919mil|Location2.X=3935.169mil|Location1.Y=5019.981mil|Location2.Y=5031.231mil|Absolute=True">Silk To Silk Clearance Constraint: (0.247mm &lt; 0.254mm) Between Text "C30" (58.675mm,92.85mm) on Top Overlay And Track (47.8mm,92.4mm)(60.675mm,92.4mm) on Top Overlay Silk Text to Silk Clearance [0.247mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3110.763mil|Location2.X=3122.013mil|Location1.Y=4782.024mil|Location2.Y=4793.274mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3110.763mil|Location2.X=3122.013mil|Location1.Y=4782.024mil|Location2.Y=4793.274mil|Absolute=True">Silk To Silk Clearance Constraint: (0.235mm &lt; 0.254mm) Between Text "C32" (37.75mm,86.8mm) on Top Overlay And Text "C33" (37.75mm,85.6mm) on Top Overlay Silk Text to Silk Clearance [0.235mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3110.763mil|Location2.X=3122.013mil|Location1.Y=4734.779mil|Location2.Y=4746.029mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3110.763mil|Location2.X=3122.013mil|Location1.Y=4734.779mil|Location2.Y=4746.029mil|Absolute=True">Silk To Silk Clearance Constraint: (0.235mm &lt; 0.254mm) Between Text "C33" (37.75mm,85.6mm) on Top Overlay And Text "C34" (37.75mm,84.4mm) on Top Overlay Silk Text to Silk Clearance [0.235mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2660.713mil|Location2.Y=2671.963mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2660.713mil|Location2.Y=2671.963mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P10" (1.225mm,32.725mm) on Top Overlay And Track (1.625mm,32.209mm)(1.625mm,34.749mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.204mil|Location2.X=1675.454mil|Location1.Y=2735.412mil|Location2.Y=2748.976mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.204mil|Location2.X=1675.454mil|Location1.Y=2735.412mil|Location2.Y=2748.976mil|Absolute=True">Silk To Silk Clearance Constraint: (0.244mm &lt; 0.254mm) Between Text "P10" (1.225mm,32.725mm) on Top Overlay And Track (1.625mm,34.749mm)(9.245mm,34.749mm) on Top Overlay Silk Text to Silk Clearance [0.244mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2523.902mil|Location2.Y=2535.152mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2523.902mil|Location2.Y=2535.152mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P12" (1.225mm,29.25mm) on Top Overlay And Track (1.625mm,28.78mm)(1.625mm,31.32mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.184mil|Location2.X=1675.434mil|Location1.Y=2604.592mil|Location2.Y=2615.842mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.184mil|Location2.X=1675.434mil|Location1.Y=2604.592mil|Location2.Y=2615.842mil|Absolute=True">Silk To Silk Clearance Constraint: (0.226mm &lt; 0.254mm) Between Text "P12" (1.225mm,29.25mm) on Top Overlay And Track (1.625mm,31.32mm)(9.245mm,31.32mm) on Top Overlay Silk Text to Silk Clearance [0.226mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2387.091mil|Location2.Y=2398.341mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2387.091mil|Location2.Y=2398.341mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P14" (1.225mm,25.775mm) on Top Overlay And Track (1.625mm,25.351mm)(1.625mm,27.891mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2250.28mil|Location2.Y=2261.53mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2250.28mil|Location2.Y=2261.53mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P16" (1.225mm,22.3mm) on Top Overlay And Track (1.625mm,21.923mm)(1.625mm,24.463mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2113.469mil|Location2.Y=2124.719mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2113.469mil|Location2.Y=2124.719mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P17" (1.225mm,18.825mm) on Top Overlay And Track (1.625mm,18.494mm)(1.625mm,21.034mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=1976.658mil|Location2.Y=1987.908mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=1976.658mil|Location2.Y=1987.908mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P19" (1.225mm,15.35mm) on Top Overlay And Track (1.625mm,15.066mm)(1.625mm,17.606mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4272.934mil|Location2.X=4280.601mil|Location1.Y=3758.919mil|Location2.Y=3766.586mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4272.934mil|Location2.X=4280.601mil|Location1.Y=3758.919mil|Location2.Y=3766.586mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "P2" (67.63mm,59.754mm) on Top Overlay And Track (65.255mm,60.605mm)(67.795mm,60.605mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4275.728mil|Location2.X=4283.395mil|Location1.Y=3759.282mil|Location2.Y=3766.949mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4275.728mil|Location2.X=4283.395mil|Location1.Y=3759.282mil|Location2.Y=3766.949mil|Absolute=True">Silk To Silk Clearance Constraint: (Collision &lt; 0.254mm) Between Text "P2" (67.63mm,59.754mm) on Top Overlay And Track (67.795mm,60.605mm)(67.795mm,80.925mm) on Top Overlay Silk Text to Silk Clearance [0mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=1839.848mil|Location2.Y=1851.098mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=1839.848mil|Location2.Y=1851.098mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P20" (1.225mm,11.875mm) on Top Overlay And Track (1.625mm,11.637mm)(1.625mm,14.177mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.572mil|Location2.X=2055.822mil|Location1.Y=2539.527mil|Location2.Y=2550.777mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2044.572mil|Location2.X=2055.822mil|Location1.Y=2539.527mil|Location2.Y=2550.777mil|Absolute=True">Silk To Silk Clearance Constraint: (0.216mm &lt; 0.254mm) Between Text "P25" (11.075mm,28.65mm) on Top Overlay And Track (10.805mm,29.855mm)(13.345mm,29.855mm) on Top Overlay Silk Text to Silk Clearance [0.216mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2131.791mil|Location2.X=2145.526mil|Location1.Y=2539.543mil|Location2.Y=2550.793mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2131.791mil|Location2.X=2145.526mil|Location1.Y=2539.543mil|Location2.Y=2550.793mil|Absolute=True">Silk To Silk Clearance Constraint: (0.23mm &lt; 0.254mm) Between Text "P25" (11.075mm,28.65mm) on Top Overlay And Track (13.345mm,29.855mm)(13.345mm,37.475mm) on Top Overlay Silk Text to Silk Clearance [0.23mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2797.524mil|Location2.Y=2808.774mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1664.182mil|Location2.X=1675.432mil|Location1.Y=2797.524mil|Location2.Y=2808.774mil|Absolute=True">Silk To Silk Clearance Constraint: (0.224mm &lt; 0.254mm) Between Text "P8" (1.225mm,36.2mm) on Top Overlay And Track (1.625mm,35.637mm)(1.625mm,38.177mm) on Top Overlay Silk Text to Silk Clearance [0.224mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1774.859mil|Location2.X=1786.109mil|Location1.Y=3223.608mil|Location2.Y=3234.858mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1774.859mil|Location2.X=1786.109mil|Location1.Y=3223.608mil|Location2.Y=3234.858mil|Absolute=True">Silk To Silk Clearance Constraint: (0.214mm &lt; 0.254mm) Between Text "R54" (1.874mm,46.617mm) on Top Overlay And Track (4.45mm,44.95mm)(4.5mm,57.25mm) on Top Overlay Silk Text to Silk Clearance [0.214mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.11mil|Location2.X=1786.36mil|Location1.Y=3346.944mil|Location2.Y=3358.194mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.11mil|Location2.X=1786.36mil|Location1.Y=3346.944mil|Location2.Y=3358.194mil|Absolute=True">Silk To Silk Clearance Constraint: (0.227mm &lt; 0.254mm) Between Text "R56" (1.874mm,50.021mm) on Top Overlay And Track (4.45mm,44.95mm)(4.5mm,57.25mm) on Top Overlay Silk Text to Silk Clearance [0.227mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.38mil|Location2.X=1786.63mil|Location1.Y=3479.943mil|Location2.Y=3491.193mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1775.38mil|Location2.X=1786.63mil|Location1.Y=3479.943mil|Location2.Y=3491.193mil|Absolute=True">Silk To Silk Clearance Constraint: (0.241mm &lt; 0.254mm) Between Text "R58" (1.874mm,53.399mm) on Top Overlay And Track (4.45mm,44.95mm)(4.5mm,57.25mm) on Top Overlay Silk Text to Silk Clearance [0.241mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2076.229mil|Location2.X=2087.479mil|Location1.Y=1748.002mil|Location2.Y=1759.252mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2076.229mil|Location2.X=2087.479mil|Location1.Y=1748.002mil|Location2.Y=1759.252mil|Absolute=True">Silk To Silk Clearance Constraint: (0.172mm &lt; 0.254mm) Between Text "R65" (11.98mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(11.925mm,28mm) on Top Overlay Silk Text to Silk Clearance [0.172mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2076.229mil|Location2.X=2087.479mil|Location1.Y=1748.002mil|Location2.Y=1759.252mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2076.229mil|Location2.X=2087.479mil|Location1.Y=1748.002mil|Location2.Y=1759.252mil|Absolute=True">Silk To Silk Clearance Constraint: (0.172mm &lt; 0.254mm) Between Text "R65" (11.98mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(16.625mm,9.75mm) on Top Overlay Silk Text to Silk Clearance [0.172mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2096.378mil|Location2.X=2107.628mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2096.378mil|Location2.X=2107.628mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True">Silk To Silk Clearance Constraint: (0.163mm &lt; 0.254mm) Between Text "R67" (13.203mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(16.625mm,9.75mm) on Top Overlay Silk Text to Silk Clearance [0.163mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.894mil|Location2.X=2161.144mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2149.894mil|Location2.X=2161.144mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True">Silk To Silk Clearance Constraint: (0.163mm &lt; 0.254mm) Between Text "R70" (14.427mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(16.625mm,9.75mm) on Top Overlay Silk Text to Silk Clearance [0.163mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2224.735mil|Location2.X=2235.985mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2224.735mil|Location2.X=2235.985mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True">Silk To Silk Clearance Constraint: (0.163mm &lt; 0.254mm) Between Text "R72" (15.651mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(16.625mm,9.75mm) on Top Overlay Silk Text to Silk Clearance [0.163mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2256.923mil|Location2.X=2268.173mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2256.923mil|Location2.X=2268.173mil|Location1.Y=1747.979mil|Location2.Y=1759.229mil|Absolute=True">Silk To Silk Clearance Constraint: (0.163mm &lt; 0.254mm) Between Text "R74" (16.875mm,7.217mm) on Top Overlay And Track (11.925mm,9.75mm)(16.625mm,9.75mm) on Top Overlay Silk Text to Silk Clearance [0.163mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2472.148mil|Location2.X=2483.398mil|Location1.Y=2828.013mil|Location2.Y=2839.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2472.148mil|Location2.X=2483.398mil|Location1.Y=2828.013mil|Location2.Y=2839.263mil|Absolute=True">Silk To Silk Clearance Constraint: (0.249mm &lt; 0.254mm) Between Text "U4" (21.8mm,37.175mm) on Top Overlay And Track (21.75mm,36.75mm)(24.85mm,36.75mm) on Top Overlay Silk Text to Silk Clearance [0.249mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="ID4SDMCMUPK3CTM50WUGWNI2KQVI1QF3Y3RGYYBFHO5UI0Z4WNDFDC"><h2>Waived Violations</h2></a><a name="ID2F0J4C3S4LQDMAH4EXGME5ZHMP5XXRW2XOTHKFIRNZRBSEGMGBYB"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="waived">Hole Size Constraint (Min=0.3mm) (Max=2.54mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1749.375mil|Location2.X=1872.672mil|Location1.Y=1513.155mil|Location2.Y=1636.452mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1749.375mil|Location2.X=1872.672mil|Location1.Y=1513.155mil|Location2.Y=1636.452mil|Absolute=True">Hole Size Constraint: (3.1mm &gt; 2.54mm) Via (5mm,5mm) from Top Layer to Bottom Layer Actual Hole Size = 3.1mm</acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:52:38 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1749.375mil|Location2.X=1872.672mil|Location1.Y=5056.462mil|Location2.Y=5179.759mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1749.375mil|Location2.X=1872.672mil|Location1.Y=5056.462mil|Location2.Y=5179.759mil|Absolute=True">Hole Size Constraint: (3.1mm &gt; 2.54mm) Via (5mm,95mm) from Top Layer to Bottom Layer Actual Hole Size = 3.1mm</acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:52:38 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4111.58mil|Location2.X=4234.877mil|Location1.Y=1513.155mil|Location2.Y=1636.452mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4111.58mil|Location2.X=4234.877mil|Location1.Y=1513.155mil|Location2.Y=1636.452mil|Absolute=True">Hole Size Constraint: (3.1mm &gt; 2.54mm) Via (65mm,5mm) from Top Layer to Bottom Layer Actual Hole Size = 3.1mm</acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:52:38 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4111.58mil|Location2.X=4234.877mil|Location1.Y=5056.462mil|Location2.Y=5179.759mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4111.58mil|Location2.X=4234.877mil|Location1.Y=5056.462mil|Location2.Y=5179.759mil|Absolute=True">Hole Size Constraint: (3.1mm &gt; 2.54mm) Via (65mm,95mm) from Top Layer to Bottom Layer Actual Hole Size = 3.1mm</acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:52:38 PM<br>Ground mounting</td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDJUBACKPFTYIKLDJY4VWPFT520JA1B15SSHRSCUD1FVB0HVSQNJCF"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="waived">Net Antennae (Tolerance=0mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1705.098mil|Location2.X=1942.197mil|Location1.Y=1468.878mil|Location2.Y=1862.115mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1705.098mil|Location2.X=1942.197mil|Location1.Y=1468.878mil|Location2.Y=1862.115mil|Absolute=True">Net Antennae: Via (5mm,5mm) from Top Layer to Bottom Layer </acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:38:37 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1705.098mil|Location2.X=1942.197mil|Location1.Y=5012.185mil|Location2.Y=5405.422mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=1705.098mil|Location2.X=1942.197mil|Location1.Y=5012.185mil|Location2.Y=5405.422mil|Absolute=True">Net Antennae: Via (5mm,95mm) from Top Layer to Bottom Layer </acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:38:37 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4067.303mil|Location2.X=4304.402mil|Location1.Y=1468.878mil|Location2.Y=1862.115mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4067.303mil|Location2.X=4304.402mil|Location1.Y=1468.878mil|Location2.Y=1862.115mil|Absolute=True">Net Antennae: Via (65mm,5mm) from Top Layer to Bottom Layer </acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:38:37 PM<br>Ground mounting</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4067.303mil|Location2.X=4304.402mil|Location1.Y=5012.185mil|Location2.Y=5405.422mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4067.303mil|Location2.X=4304.402mil|Location1.Y=5012.185mil|Location2.Y=5405.422mil|Absolute=True">Net Antennae: Via (65mm,95mm) from Top Layer to Bottom Layer </acronym></a><br>Waived by Paul Schneider at 11/27/2019 5:38:37 PM<br>Ground mounting</td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>

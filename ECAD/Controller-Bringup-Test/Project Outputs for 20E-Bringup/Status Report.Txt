@@ -1,0 +1,24 @@
+Output: Gerber X2 Files
+Type  : GerberX2
+From  : Project [20E-Bringup.PrjPcb]
+   Generated File[proto-rev0_Copper_Signal_Top.gbr]
+   Generated File[proto-rev0_Copper_Signal_Bot.gbr]
+   Generated File[proto-rev0_Pads_Bot.gbr]
+   Generated File[proto-rev0_Pads_Top.gbr]
+   Generated File[proto-rev0_Soldermask_Bot.gbr]
+   Generated File[proto-rev0_Legend_Top.gbr]
+   Generated File[proto-rev0_Paste_Top.gbr]
+   Generated File[proto-rev0_Soldermask_Top.gbr]
+   Generated File[proto-rev0_Mechanical_13.gbr]
+   Generated File[proto-rev0_Mechanical_1.gbr]
+   Generated File[proto-rev0_Mechanical_15.gbr]
+   Generated File[proto-rev0_Profile.gbr]
+   Generated File[proto-rev0.RUL]
+   Generated File[proto-rev0.EXTREP]
+   Generated File[proto-rev0.REP]
+
+
+Files Generated   : 15
+Documents Printed : 0
+
+Finished Output Generation At 6:59:09 PM On 11/27/2019

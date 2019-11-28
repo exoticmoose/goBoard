@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=P5V-MAIN Pin=P4-1
+Removed Pin From Net: NetName=NetP4_2 Pin=P4-2
+Removed Pin From Net: NetName=NetP4_2 Pin=P8-2
+Removed Member From Class: ClassName=Connectors Member=P4
+Change Net Name : Old Net Name=NetP4_2 New Net Name=NetP6_2

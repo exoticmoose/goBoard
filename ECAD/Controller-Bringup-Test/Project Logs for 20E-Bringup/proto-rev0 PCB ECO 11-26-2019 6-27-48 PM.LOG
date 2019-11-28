@@ -1,0 +1,30 @@
+Change Component Footprint: Designator=TP7 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-SMD-1MM
+Change Component Footprint: Designator=TP8 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-SMD-1MM
+Change Component Footprint: Designator=TP1 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP2 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP3 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP4 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP5 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP6 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP9 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP10 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP11 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP12 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP13 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP14 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Footprint: Designator=TP15 Old Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM5 New Footprint=FOOTPRINT-GENERIC-TP-VIA-1MM
+Change Component Library : Designator=TP1 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP2 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP3 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP4 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP5 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP6 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP7 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP8 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP9 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP10 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP11 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP12 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP13 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP14 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib
+Change Component Library : Designator=TP15 Old Library=HR-Master-Integrated.IntLib New Library=Generic.SchLib

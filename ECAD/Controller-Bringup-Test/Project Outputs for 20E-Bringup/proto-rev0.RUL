@@ -1,0 +1,5 @@
+DRC Rules Export File for PCB: G:\SAE\EV-Car\2019-2020\Electrical\ECAD\LVE-PCB\Controller-Bringup-Test\proto-rev0.PcbDoc
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=5.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=5.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
