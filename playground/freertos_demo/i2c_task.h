@@ -16,5 +16,6 @@
 //
 //*****************************************************************************
 extern int I2CTaskInit();
+void I2CSendString(uint32_t slave_addr, char array[]);
 
 #endif // __I2C_TASK_H__

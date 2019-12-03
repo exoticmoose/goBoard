@@ -171,8 +171,8 @@ main(void)
     //
     // Set the clocking to run at 50 MHz from the PLL.
     //
-    ROM_SysCtlClockSet(SYSCTL_CFG_VCO_480 | SYSCTL_USE_PLL | SYSCTL_XTAL_25MHZ |
-                       SYSCTL_OSC_MAIN);
+    //ROM_SysCtlClockSet(SYSCTL_CFG_VCO_480 | SYSCTL_USE_PLL | SYSCTL_XTAL_25MHZ |
+     //                  SYSCTL_OSC_MAIN);
 
     //ui32SysClock = SysCtlClockFreqSet((SYSCTL_OSC_MAIN | SYSCTL_USE_PLL | SYSCTL_XTAL_25MHZ |
     //    SYSCTL_CFG_VCO_480), 120000000);
