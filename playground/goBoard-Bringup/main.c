@@ -30,7 +30,7 @@ void delay_sec(int seconds) {
 volatile uint32_t g_ui32MsgCount = 0;
 volatile bool g_bErrFlag = 0;
 
-void CANIntHandler(void) {
+void CAN0IntHandler(void) {
     uint32_t ui32Status;
 
     //
@@ -98,7 +98,74 @@ void CANIntHandler(void) {
         //
     }
 }
+void CAN1IntHandler(void) {
+    uint32_t ui32Status;
 
+    //
+    // Read the CAN interrupt status to find the cause of the interrupt
+    //
+    ui32Status = CANIntStatus(CAN1_BASE, CAN_INT_STS_CAUSE);
+
+    //
+    // If the cause is a controller status interrupt, then get the status
+    //
+    if(ui32Status == CAN_INT_INTID_STATUS)
+    {
+        //
+        // Read the controller status.  This will return a field of status
+        // error bits that can indicate various errors.  Error processing
+        // is not done in this example for simplicity.  Refer to the
+        // API documentation for details about the error status bits.
+        // The act of reading this status will clear the interrupt.  If the
+        // CAN peripheral is not connected to a CAN bus with other CAN devices
+        // present, then errors will occur and will be indicated in the
+        // controller status.
+        //
+        ui32Status = CANStatusGet(CAN1_BASE, CAN_STS_CONTROL);
+
+        //
+        // Set a flag to indicate some errors may have occurred.
+        //
+        g_bErrFlag = 1;
+    }
+
+    //
+    // Check if the cause is message object 1, which what we are using for
+    // sending messages.
+    //
+    else if(ui32Status == 1)
+    {
+        //
+        // Getting to this point means that the TX interrupt occurred on
+        // message object 1, and the message TX is complete.  Clear the
+        // message object interrupt.
+        //
+        CANIntClear(CAN1_BASE, 1);
+
+        //
+        // Increment a counter to keep track of how many messages have been
+        // sent.  In a real application this could be used to set flags to
+        // indicate when a message is sent.
+        //
+        g_ui32MsgCount++;
+
+        //
+        // Since the message was sent, clear any error flags.
+        //
+        g_bErrFlag = 0;
+    }
+
+    //
+    // Otherwise, something unexpected caused the interrupt.  This should
+    // never happen.
+    //
+    else
+    {
+        //
+        // Spurious interrupt handling can go here.
+        //
+    }
+}
 void InitCAN() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
     GPIOPinConfigure(GPIO_PB4_CAN0RX);
@@ -107,7 +174,7 @@ void InitCAN() {
     SysCtlPeripheralEnable(SYSCTL_PERIPH_CAN0);
     CANInit(CAN0_BASE);
     CANBitRateSet(CAN0_BASE, SysCtlClockGet(), 500000);
-    CANIntRegister(CAN0_BASE, CANIntHandler); // use dynamic vector table allocation
+    //CANIntRegister(CAN0_BASE, CANIntHandler); // use dynamic vector table allocation
     CANIntEnable(CAN0_BASE, CAN_INT_MASTER | CAN_INT_ERROR | CAN_INT_STATUS);
     IntEnable(INT_CAN0);
     CANEnable(CAN0_BASE);
@@ -115,22 +182,22 @@ void InitCAN() {
 
 int main(void)
 {
-    puts("Hello!");
+    //puts("Hello!");
     printf("goBoard Boot!\n");
-    printf("Boot SysClock = %d\n", SysCtlClockGet());
-
-    if (IntMasterEnable()) {
-        printf("Interrupts enabled!\n");
-    }
-    else {
-        printf("Interrupts were already enabled!\n");
-    }
+    //printf("Boot SysClock = %d\n", SysCtlClockGet());
+//
+//    if (IntMasterEnable()) {
+//        printf("Interrupts enabled!\n");
+//    }
+//    else {
+//        printf("Interrupts were already enabled!\n");
+//    }
 
 
     // Sys clock ???
     SysCtlClockSet(SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ | SYSCTL_SYSDIV_8 | SYSCTL_USE_PLL);
 
-    printf("Mod SysClock = %d\n", SysCtlClockGet());
+    //printf("Mod SysClock = %d\n", SysCtlClockGet());
 
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
     GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
@@ -157,7 +224,7 @@ int main(void)
     // GPIO port B needs to be enabled so these pins can be used.
     // TODO: change this to whichever GPIO port you are using
     //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);///////////////////////////////////////////////////changed
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); // TODO PS
 
     //
     // Configure the GPIO pin muxing to select CAN0 functions for these pins.

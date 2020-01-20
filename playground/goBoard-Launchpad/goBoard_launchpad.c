@@ -28,7 +28,7 @@
 //
 //*****************************************************************************
 
-#include "tm4c123gh6pm.h"
+#include "tm4c123fh6pm.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include "inc/hw_memmap.h"
@@ -179,15 +179,25 @@ ConfigureUART(void)
 int
 main(void)
 {
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
+    GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+    GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
+
+    while (1);
+
+    return 0;
+}
+/*
+ *
     //
     // Set the clocking to run at 50 MHz from the PLL.
     //
-    ROM_SysCtlClockSet(SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN);
+    //ROM_SysCtlClockSet(SYSCTL_XTAL_25MHZ | SYSCTL_OSC_MAIN);
 
     //
     // Initialize the UART and configure it for 115,200, 8-N-1 operation.
     //
-    ConfigureUART();
+    //ConfigureUART();
 
     //
     // Print demo introduction.
@@ -246,3 +256,5 @@ main(void)
     {
     }
 }
+
+*/
