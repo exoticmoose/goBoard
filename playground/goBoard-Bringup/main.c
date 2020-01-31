@@ -27,8 +27,14 @@ void delay_sec(int seconds) {
 
 
 
-volatile uint32_t g_ui32MsgCount = 0;
+volatile uint32_t g_ui32TxCount = 0;
+volatile uint32_t g_ui32RxCount = 0;
+volatile bool g_bRXFlag = 0;
 volatile bool g_bErrFlag = 0;
+
+volatile uint32_t canStatusControlTXOK = 0;
+volatile uint32_t canStatusControlERROR = 0;
+volatile uint32_t canStatusControlANY = 0;
 
 void CAN0IntHandler(void) {
     uint32_t ui32Status;
@@ -55,6 +61,25 @@ void CAN0IntHandler(void) {
         //
         ui32Status = CANStatusGet(CAN0_BASE, CAN_STS_CONTROL);
 
+//        CAN_STATUS_BUS_OFF - controller is in bus-off condition
+//        CAN_STATUS_EWARN - an error counter has reached a limit of at least 96
+//        CAN_STATUS_EPASS - CAN controller is in the error passive state
+//        CAN_STATUS_RXOK - a message was received successfully (independent of any message filtering).
+//        CAN_STATUS_TXOK - a message was successfully transmitted
+//        CAN_STATUS_LEC_MSK - mask of last error code bits (3 bits)
+//        CAN_STATUS_LEC_NONE - no error
+//        CAN_STATUS_LEC_STUFF - stuffing error detected
+//        CAN_STATUS_LEC_FORM - a format error occurred in the fixed format part of a message
+//        CAN_STATUS_LEC_ACK - a transmitted message was not acknowledged
+//        CAN_STATUS_LEC_BIT1 - dominant level detected when trying to send in recessive
+//        mode
+//        CAN_STATUS_LEC_BIT0 - recessive level detected when trying to send in dominant
+//        mode
+//        CAN_STATUS_LEC_CRC - CRC error in received message
+
+
+
+
         //
         // Set a flag to indicate some errors may have occurred.
         //
@@ -79,7 +104,7 @@ void CAN0IntHandler(void) {
         // sent.  In a real application this could be used to set flags to
         // indicate when a message is sent.
         //
-        g_ui32MsgCount++;
+        g_ui32TxCount++;
 
         //
         // Since the message was sent, clear any error flags.
@@ -123,7 +148,13 @@ void CAN1IntHandler(void) {
         //
         ui32Status = CANStatusGet(CAN1_BASE, CAN_STS_CONTROL);
 
-        //
+        if (ui32Status == CAN_STATUS_TXOK) {
+            canStatusControlTXOK++;
+        }
+        else {
+            canStatusControlERROR++;
+        }
+
         // Set a flag to indicate some errors may have occurred.
         //
         g_bErrFlag = 1;
@@ -147,13 +178,46 @@ void CAN1IntHandler(void) {
         // sent.  In a real application this could be used to set flags to
         // indicate when a message is sent.
         //
-        g_ui32MsgCount++;
+        g_ui32TxCount++;
 
         //
         // Since the message was sent, clear any error flags.
         //
         g_bErrFlag = 0;
     }
+
+    else if(ui32Status == 2) {
+
+        //
+        // Getting to this point means that the RX interrupt occurred on
+        // message object 1, and the message reception is complete.  Clear the
+        // message object interrupt.
+        //
+        CANIntClear(CAN0_BASE, 1);
+
+        //
+        // Increment a counter to keep track of how many messages have been
+        // received.  In a real application this could be used to set flags to
+        // indicate when a message is received.
+        //
+        g_ui32RxCount++;
+
+        //
+        // Set flag to indicate received message is pending.
+        //
+        g_bRXFlag = 1;
+
+        //
+        // Since a message was received, clear any error flags.
+        //
+        g_bErrFlag = 0;
+    }
+
+
+
+
+
+
 
     //
     // Otherwise, something unexpected caused the interrupt.  This should
@@ -185,16 +249,8 @@ int main(void)
     //puts("Hello!");
     printf("goBoard Boot!\n");
     //printf("Boot SysClock = %d\n", SysCtlClockGet());
-//
-//    if (IntMasterEnable()) {
-//        printf("Interrupts enabled!\n");
-//    }
-//    else {
-//        printf("Interrupts were already enabled!\n");
-//    }
 
-
-    // Sys clock ???
+    // Sys clock 200MHz PLL --> 200/8 = 25MHz
     SysCtlClockSet(SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ | SYSCTL_SYSDIV_8 | SYSCTL_USE_PLL);
 
     //printf("Mod SysClock = %d\n", SysCtlClockGet());
@@ -203,161 +259,126 @@ int main(void)
     GPIOPinTypeGPIOOutput(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
     GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0);
 
-//    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-//    GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_4 | GPIO_PIN_5);
-//    GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_4 | GPIO_PIN_5, 0xFF);
 
-    //while(1);
+    tCANMsgObject sCANmsgRx;
+    uint64_t ui64RxData;
+    uint8_t *pui8RxData;
 
-    //InitCAN();
+    tCANMsgObject sCANmsgTx;
+    uint32_t ui32TxData;
+    uint8_t *pui8TxData;
 
-    tCANMsgObject sCANMessage;
-    uint32_t ui32MsgData;
-    uint8_t *pui8MsgData;
-
-    pui8MsgData = (uint8_t *)&ui32MsgData;
+    pui8TxData = (uint8_t *)&ui32TxData;
+    pui8RxData = (uint8_t *)&ui64RxData;
 
     //
-    // For this example CAN0 is used with RX and TX pins on port B4 and B5.
-    // The actual port and pins used may be different on your part, consult
-    // the data sheet for more information.
-    // GPIO port B needs to be enabled so these pins can be used.
-    // TODO: change this to whichever GPIO port you are using
-    //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); // TODO PS
 
-    //
-    // Configure the GPIO pin muxing to select CAN0 functions for these pins.
-    // This step selects which alternate function is available for these pins.
-    // This is necessary if your part supports GPIO pin function muxing.
-    // Consult the data sheet to see which functions are allocated per pin.
-    // TODO: change this to select the port/pin you are using
-    //
-    GPIOPinConfigure(GPIO_PB4_CAN0RX);///////////////////////////////////////////////////////////changed
-    GPIOPinConfigure(GPIO_PB5_CAN0TX);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
 
-    //
-    // Enable the alternate function on the GPIO pins.  The above step selects
-    // which alternate function is available.  This step actually enables the
-    // alternate function instead of GPIO for these pins.
-    // TODO: change this to match the port/pin you are using
-    //
-    GPIOPinTypeCAN(GPIO_PORTB_BASE, GPIO_PIN_4 | GPIO_PIN_5);//////////////////////////////////changed
+    GPIOPinConfigure(GPIO_PA0_CAN1RX);
+    GPIOPinConfigure(GPIO_PA1_CAN1TX);
 
-    //
-    // The GPIO port and pins have been set up for CAN.  The CAN peripheral
-    // must be enabled.
-    //
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_CAN0);
+    GPIOPinTypeCAN(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
-    //
-    // Initialize the CAN controller
-    //
-    CANInit(CAN0_BASE);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_CAN1);
 
-    //
-    // Set up the bit rate for the CAN bus.  This function sets up the CAN
-    // bus timing for a nominal configuration.  You can achieve more control
-    // over the CAN bus timing by using the function CANBitTimingSet() instead
-    // of this one, if needed.
-    // In this example, the CAN bus is set to 500 kHz.  In the function below,
-    // the call to SysCtlClockGet() or ui32SysClock is used to determine the
-    // clock rate that is used for clocking the CAN peripheral.  This can be
-    // replaced with a  fixed value if you know the value of the system clock,
-    // saving the extra function call.  For some parts, the CAN peripheral is
-    // clocked by a fixed 8 MHz regardless of the system clock in which case
-    // the call to SysCtlClockGet() or ui32SysClock should be replaced with
-    // 8000000.  Consult the data sheet for more information about CAN
-    // peripheral clocking.
-    //
-#if defined(TARGET_IS_TM4C129_RA0) ||                                         \
-    defined(TARGET_IS_TM4C129_RA1) ||                                         \
-    defined(TARGET_IS_TM4C129_RA2)
-    CANBitRateSet(CAN0_BASE, ui32SysClock, 500000);
-#else
-    CANBitRateSet(CAN0_BASE, SysCtlClockGet(), 500000);/////////////////////////////////////////////////////////////CAN speed???
-#endif
+    CANInit(CAN1_BASE);
 
-    //
-    // Enable interrupts on the CAN peripheral.  This example uses static
-    // allocation of interrupt handlers which means the name of the handler
-    // is in the vector table of startup code.  If you want to use dynamic
-    // allocation of the vector table, then you must also call CANIntRegister()
-    // here.
-    //
+    CANBitRateSet(CAN1_BASE, SysCtlClockGet(), 500000);
+
+
     // CANIntRegister(CAN0_BASE, CANIntHandler); // if using dynamic vectors
-    //
-    CANIntEnable(CAN0_BASE, CAN_INT_MASTER | CAN_INT_ERROR | CAN_INT_STATUS);
+    // See ..._startup_ccs.c for interrupt mapping
+    CANIntEnable(CAN1_BASE, CAN_INT_MASTER | CAN_INT_ERROR | CAN_INT_STATUS);
+    IntEnable(INT_CAN1);
 
-    //
-    // Enable the CAN interrupt on the processor (NVIC).
-    //
-    IntEnable(INT_CAN0);
+    CANEnable(CAN1_BASE);
 
-    //
-    // Enable the CAN for operation.
-    //
-    CANEnable(CAN0_BASE);
+    ui32TxData = 0x0ABCDEF0;
+    sCANmsgTx.ui32MsgID = 1;
+    sCANmsgTx.ui32MsgIDMask = 0;
+    sCANmsgTx.ui32Flags = MSG_OBJ_TX_INT_ENABLE;
+    sCANmsgTx.ui32MsgLen = sizeof(pui8TxData);
+    sCANmsgTx.pui8MsgData = pui8TxData;
 
-    ui32MsgData = 0;
-    sCANMessage.ui32MsgID = 1;
-    sCANMessage.ui32MsgIDMask = 0;
-    sCANMessage.ui32Flags = MSG_OBJ_TX_INT_ENABLE;
-    sCANMessage.ui32MsgLen = sizeof(pui8MsgData);
-    sCANMessage.pui8MsgData = pui8MsgData;
+    ui64RxData = 0;
+    sCANmsgRx.ui32MsgID = 0;
+    sCANmsgRx.ui32MsgIDMask = 0;
+    sCANmsgRx.ui32Flags = MSG_OBJ_RX_INT_ENABLE | MSG_OBJ_USE_ID_FILTER;
+    sCANmsgRx.ui32MsgLen = 8;
 
+    CANMessageSet(CAN1_BASE, 2, &sCANmsgRx, MSG_OBJ_TYPE_RX);
 
+    unsigned int uIdx;
+
+    printf("start loop\n");
     while (1) {
-        printf("tick!\n");
-        //
-        // Print a message to the console showing the message count and the
-        // contents of the message being sent.
-        //
-        printf("Sending msg: 0x%02X %02X %02X %02X\n",
-                   pui8MsgData[0], pui8MsgData[1], pui8MsgData[2],
-                   pui8MsgData[3]);
+        //printf("tick\n");
 
-        //
-        // Send the CAN message using object number 1 (not the same thing as
-        // CAN ID, which is also 1 in this example).  This function will cause
-        // the message to be transmitted right away.
-        //
-        CANMessageSet(CAN0_BASE, 1, &sCANMessage, MSG_OBJ_TYPE_TX);
+// ---- Rx ----
+        if(g_bRXFlag) {
+            //
+            // Reuse the same message object that was used earlier to configure
+            // the CAN for receiving messages.  A buffer for storing the
+            // received data must also be provided, so set the buffer pointer
+            // within the message object.
+            //
+            sCANmsgRx.pui8MsgData = pui8RxData;
 
-        //
-        // Now wait 1 second before continuing
-        //
+            //
+            // Read the message from the CAN.  Message object number 1 is used
+            // (which is not the same thing as CAN ID).  The interrupt clearing
+            // flag is not set because this interrupt was already cleared in
+            // the interrupt handler.
+            //
+            CANMessageGet(CAN0_BASE, 2, &sCANmsgRx, 0);
+
+            //
+            // Clear the pending message flag so that the interrupt handler can
+            // set it again when the next message arrives.
+            //
+            g_bRXFlag = 0;
+
+            //
+            // Check to see if there is an indication that some messages were
+            // lost.
+            //
+            if(sCANmsgRx.ui32Flags & MSG_OBJ_DATA_LOST)
+            {
+                printf("CAN message loss detected\n");
+            }
+
+            //
+            // Print out the contents of the message that was received.
+            //
+            printf("Msg ID=0x%08X len=%u data=0x",
+                       sCANmsgRx.ui32MsgID, sCANmsgRx.ui32MsgLen);
+            for(uIdx = 0; uIdx < sCANmsgRx.ui32MsgLen; uIdx++)
+            {
+                printf("%02X ", pui8RxData[uIdx]);
+            }
+            printf("total count=%u\n", g_ui32TxCount);
+        }
+
+// ---- Tx ----
+//        printf("Sending msg: 0x%02X %02X %02X %02X\n",
+//                   pui8TxData[0], pui8TxData[1], pui8TxData[2],
+//                   pui8TxData[3]);
+
+        CANMessageSet(CAN1_BASE, 1, &sCANmsgTx, MSG_OBJ_TYPE_TX);
+
         delay_ms(100);
 
-        //
-        // Check the error flag to see if errors occurred
-        //
-        if(g_bErrFlag)
-        {
-            printf(" error - cable connected?\n");
-        }
-        else
-        {
-            //
-            // If no errors then print the count of message sent
-            //
-//            int tmp = 0;
-//            for (int i = 0; i < 3; i++) {
-//                tmp += i;
-//            }
-            printf(" total count = %u\n", g_ui32MsgCount);
+        if(g_bErrFlag) printf(" error - cable connected?\n");
+        //else printf(" total count = %u\n", g_ui32TxCount);
+
+        if (!((ui32TxData - 1) % 20)) {
+            printf("tx: %d   txok: %d   err: %d\n", g_ui32TxCount, canStatusControlTXOK, canStatusControlERROR);
         }
 
-        //
-        // Increment the value in the message data.
-        //
-        ui32MsgData++;
+        ui32TxData++;
 
-        delay_ms(1500);
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0xFF);
-        delay_ms(1500);
-        GPIOPinWrite(GPIO_PORTD_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0x00);
-    }
+    } // End while
 
 
-}
+} // End main()
